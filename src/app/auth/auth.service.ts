@@ -37,6 +37,7 @@ export class AuthService {
         createAuth0Client({
           domain: config.auth.domain,
           client_id: config.auth.client_id,
+          audience: config.auth.audience,
           redirect_uri: `${window.location.origin}`
         })) as Observable<Auth0Client>)),
       shareReplay(1),
@@ -83,10 +84,15 @@ export class AuthService {
     // A desired redirect path can be passed to login method
     // (e.g., from a route guard)
     // Ensure Auth0 client instance exists
-    this.auth0Client$.subscribe((client: Auth0Client) => {
+    combineLatest([this.config.config$, this.auth0Client$])
+      .pipe(
+        (take(1))
+      )
+    .subscribe(([config, client]) => {
       // Call method to log in
       client.loginWithRedirect({
         redirect_uri: `${window.location.origin}`,
+        audience: config.auth.audience,
         appState: { target: redirectPath }
       });
     });

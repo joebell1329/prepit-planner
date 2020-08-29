@@ -1,9 +1,9 @@
 <nav class="prepit-nav">
   <h1>Prepit!</h1>
-  <div class="login" *ngIf="!auth.loggedIn">
+  <div class="login" *ngIf="!(auth.loggedIn$ | async)">
     <button (click)="auth.login()">Login</button>
   </div>
-  <div class="logout" *ngIf="auth.loggedIn">
+  <div class="logout" *ngIf="auth.loggedIn$ | async">
     <button (click)="auth.logout()">Logout</button>
   </div>
 </nav>

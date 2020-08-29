@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule, OnInit } from '@angular/core';
+import { from } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -12,6 +14,11 @@ export class NavbarComponent implements OnInit {
   constructor(public auth: AuthService) { }
 
   ngOnInit(): void {
+    this.auth.auth0Client$
+      .pipe(
+        switchMap(client => from(client.isAuthenticated()))
+      )
+      .subscribe(console.log);
   }
 
 }

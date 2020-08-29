@@ -11,13 +11,14 @@ import { ConfigService } from '../config/config.service';
 export class AuthService {
 
   public auth0Client$: Observable<Auth0Client>;
-  public isAuthenticated$: Observable<boolean>;
+  private isAuthenticated$: Observable<boolean>;
   public handleRedirectCallback$: Observable<RedirectLoginResult>;
 
   private userProfileSubject$ = new BehaviorSubject<any>(null);
   public userProfile$ = this.userProfileSubject$.asObservable();
 
-  public loggedIn: boolean = null;
+  private loggedInSubject$ = new BehaviorSubject<boolean>(false);
+  public loggedIn$ = this.loggedInSubject$.asObservable();
 
   constructor(private router: Router, private config: ConfigService) {
     this.initialiseObservables();
@@ -46,7 +47,7 @@ export class AuthService {
 
     this.isAuthenticated$ = this.auth0Client$.pipe(
       concatMap((client: Auth0Client) => from(client.isAuthenticated())),
-      tap(res => this.loggedIn = res)
+      tap(res => this.loggedInSubject$.next(res))
     );
 
     this.handleRedirectCallback$ = this.auth0Client$.pipe(
@@ -134,7 +135,7 @@ export class AuthService {
         client.logout({
           client_id: config.auth.client_id,
           returnTo: `${window.location.origin}`,
-          federated: true
+          // federated: true
         });
       });
   }

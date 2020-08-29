@@ -1,5 +1,6 @@
 {
   "auth": {
-    "client_id": "<client id>"
+    "client_id": "<client id>",
+    "domain": "<domain>"
   }
 }

@@ -5,7 +5,8 @@ import { shareReplay } from 'rxjs/operators';
 
 type Config = {
   auth: {
-    client_id: string
+    client_id: string,
+    domain: string
   };
 };
 

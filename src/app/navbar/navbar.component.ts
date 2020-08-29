@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, NgModule, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 
@@ -17,6 +18,9 @@ export class NavbarComponent implements OnInit {
 
 @NgModule({
   declarations: [ NavbarComponent ],
+  imports: [
+    CommonModule
+  ],
   exports: [ NavbarComponent ]
 })
 export class NavbarModule {}

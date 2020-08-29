@@ -11,7 +11,7 @@ import { ConfigService } from '../config/config.service';
 export class AuthService {
 
   public auth0Client$: Observable<Auth0Client>;
-  private isAuthenticated$: Observable<boolean>;
+  public isAuthenticated$: Observable<boolean>;
   public handleRedirectCallback$: Observable<RedirectLoginResult>;
 
   private userProfileSubject$ = new BehaviorSubject<any>(null);

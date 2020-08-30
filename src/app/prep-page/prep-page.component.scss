@@ -1,0 +1,20 @@
+.prep-page {
+  .prep-row {
+    display: flex;
+
+    .ingredients-list {
+      flex: 1;
+      background-color: cadetblue;
+    }
+
+    .search-area {
+      flex: 0 0 400px;
+      background-color: antiquewhite;
+    }
+
+    .portions {
+      flex: 1;
+      background-color: azure;
+    }
+  }
+}

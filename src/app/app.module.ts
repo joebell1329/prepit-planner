@@ -6,10 +6,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ConfigService } from './config/config.service';
 import { NavbarModule } from './navbar/navbar.component';
+import { PrepPageComponent } from './prep-page/prep-page.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PrepPageComponent
   ],
   imports: [
     AppRoutingModule,

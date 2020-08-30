@@ -1,7 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule, OnInit } from '@angular/core';
-import { from } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 
 @Component({

@@ -1,18 +1,21 @@
 <div class="prep-page">
   <div class="prep-row">
-    <div class="ingredients-list">
-      <h1>Ingredients</h1>
+    <div class="prep-col left-pane">
+      <div class="ingredients-list">
+        <h1>Ingredients</h1>
+      </div>
+      <div class="portions">
+        <h1>Portions</h1>
+      </div>
     </div>
-    <div class="search-area">
+    <div class="search-area right-pane">
       <input type="text" placeholder="Search for some ingredients" [formControl]="searchControl">
       <div class="result" *ngFor="let food of searchResults$ | async">
         {{ food.name }}
+        <ng-container *ngIf="food.brand">
+          &nbsp;- {{ food.brand }}
+        </ng-container>
       </div>
-    </div>
-  </div>
-  <div class="prep-row">
-    <div class="portions">
-      <h1>Portions</h1>
     </div>
   </div>
 </div>

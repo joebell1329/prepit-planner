@@ -4,7 +4,10 @@
       <h1>Ingredients</h1>
     </div>
     <div class="search-area">
-      <input type="text" placeholder="Search for some ingredients">
+      <input type="text" placeholder="Search for some ingredients" [formControl]="searchControl">
+      <div class="result" *ngFor="let food of searchResults$ | async">
+        {{ food.name }}
+      </div>
     </div>
   </div>
   <div class="prep-row">

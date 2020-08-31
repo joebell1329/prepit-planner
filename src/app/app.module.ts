@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { ConfigService } from './config/config.service';
 import { NavbarModule } from './navbar/navbar.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { NavbarModule } from './navbar/navbar.component';
     AppRoutingModule,
     BrowserModule,
     HttpClientModule,
-    NavbarModule
+    NavbarModule,
+    FontAwesomeModule
   ],
   providers: [
     {

@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, filter, shareReplay, switchMap, takeUntil } from 'rxjs/operators';
 import { Food } from '../api/api.model';
 import { FoodService } from '../api/food/food.service';
+import { ModalModule } from '../shared/modal/modal.component';
 
 @Component({
   selector: 'prepit-prep-page',
@@ -14,6 +17,10 @@ import { FoodService } from '../api/food/food.service';
 export class PrepPageComponent implements OnInit, OnDestroy {
 
   private componentDestroyed$ = new Subject<void>();
+
+  public readonly ICONS = {
+    faPlus
+  };
 
   public searchControl = new FormControl();
 
@@ -41,7 +48,7 @@ export class PrepPageComponent implements OnInit, OnDestroy {
 
 @NgModule({
   declarations: [ PrepPageComponent ],
-  imports: [ ReactiveFormsModule, CommonModule ],
+  imports: [ ReactiveFormsModule, CommonModule, FontAwesomeModule, ModalModule ],
   exports: [ PrepPageComponent ]
 })
 export class PrepPageModule { }

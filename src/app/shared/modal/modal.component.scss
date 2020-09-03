@@ -1,0 +1,37 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, .2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .modal-container {
+    max-width: 600px;
+    min-width: 600px;
+    padding: 10px;
+    background-color: white;
+    box-shadow: 0 0 10px black;
+    border-radius: 10px;
+
+    .modal-title {
+      padding: 10px;
+      display: flex;
+      h1 {
+        margin: 0 10px 0 0;
+        flex: 1;
+      }
+
+      fa-icon {
+        cursor: pointer;
+      }
+    }
+
+    .modal-body {
+      padding: 10px;
+    }
+  }
+}

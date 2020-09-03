@@ -1,0 +1,11 @@
+<div class="modal-overlay" (click)="modalClose.emit()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div class="modal-title">
+      <h1>{{ modalTitle }}</h1>
+      <fa-icon [icon]="ICONS.faTimes" size="2x" (click)="modalClose.emit()"></fa-icon>
+    </div>
+    <div class="modal-body">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

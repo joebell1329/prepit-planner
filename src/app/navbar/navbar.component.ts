@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -16,12 +18,3 @@ export class NavbarComponent implements OnInit {
   }
 
 }
-
-@NgModule({
-  declarations: [ NavbarComponent ],
-  imports: [
-    CommonModule
-  ],
-  exports: [ NavbarComponent ]
-})
-export class NavbarModule {}

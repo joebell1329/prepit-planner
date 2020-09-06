@@ -1,10 +1,18 @@
-<nav class="prepit-nav">
-  <h1>Prepit!</h1>
-  <div class="login" *ngIf="!(auth.loggedIn$ | async)">
-    <button (click)="auth.login()">Login</button>
-  </div>
-  <div class="logout" *ngIf="auth.loggedIn$ | async">
-    <button (click)="auth.logout()">Logout</button>
-  </div>
-</nav>
+<mat-toolbar color="primary">
+  <span>Prepit!</span>
+  <a routerLink="/prep">Meals</a>
+  <span class="spacer"></span>
+  <button mat-raised-button *ngIf="!(auth.isAuthenticated$ | async)" (click)="auth.login()">Login</button>
+  <button mat-raised-button *ngIf="auth.isAuthenticated$ | async" (click)="auth.logout()">Logout</button>
+</mat-toolbar>
+
+<!--<nav class="prepit-nav">-->
+<!--  <h1>Prepit!</h1>-->
+<!--  <div class="login" *ngIf="!(auth.loggedIn$ | async)">-->
+<!--    <button (click)="auth.login()">Login</button>-->
+<!--  </div>-->
+<!--  <div class="logout" *ngIf="auth.loggedIn$ | async">-->
+<!--    <button (click)="auth.logout()">Logout</button>-->
+<!--  </div>-->
+<!--</nav>-->
 

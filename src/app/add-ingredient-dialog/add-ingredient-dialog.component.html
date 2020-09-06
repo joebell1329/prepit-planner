@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Add ingredient</h2>
+<mat-dialog-content>
+  <prepit-add-ingredient-form (validityChange)="onFormValidityChange($event)" (valueChange)="onFormValueChange($event)"></prepit-add-ingredient-form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close color="warn">Cancel</button>
+  <button mat-button cdkFocusInitial color="primary" [disabled]="!formIsValid" (click)="this.submit.emit(this.formData); dialogRef.close();">Add</button>
+</mat-dialog-actions>

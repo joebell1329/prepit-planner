@@ -1,24 +1,54 @@
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { ConfigService } from './config/config.service';
-import { NavbarModule } from './navbar/navbar.component';
+import { AddIngredientDialogComponent } from './add-ingredient-dialog/add-ingredient-dialog.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { PrepPageComponent } from './prep-page/prep-page.component';
+import { AddIngredientFormComponent } from './add-ingredient-form/add-ingredient-form.component';
+import { FoodListComponent } from './food-list/food-list.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AddIngredientDialogComponent,
+    PrepPageComponent,
+    NavbarComponent,
+    AddIngredientFormComponent,
+    FoodListComponent
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     HttpClientModule,
-    NavbarModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    BrowserAnimationsModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatDialogModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatListModule,
+    MatSelectModule
   ],
   providers: [
     {
@@ -33,6 +63,6 @@ import { NavbarModule } from './navbar/navbar.component';
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

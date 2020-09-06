@@ -1,0 +1,8 @@
+<mat-selection-list #foodsList [multiple]="false" (selectionChange)="onFoodSelected($event.option.value)">
+  <mat-list-option *ngFor="let food of foods" [value]="food">
+    <div class="food">
+      <span class="brand">{{ food?.brand || 'Generic' }} - </span>
+      <span class="name">{{ food.name }}</span>
+    </div>
+  </mat-list-option>
+</mat-selection-list>

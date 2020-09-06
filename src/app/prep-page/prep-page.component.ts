@@ -1,13 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, filter, shareReplay, switchMap, takeUntil } from 'rxjs/operators';
+import { AddIngredientDialogComponent } from '../add-ingredient-dialog/add-ingredient-dialog.component';
+import { AddIngredientFormData } from '../add-ingredient-form/add-ingredient-form.model';
 import { Food } from '../api/api.model';
 import { FoodService } from '../api/food/food.service';
-import { ModalModule } from '../shared/modal/modal.component';
 
 @Component({
   selector: 'prepit-prep-page',
@@ -22,11 +27,13 @@ export class PrepPageComponent implements OnInit, OnDestroy {
     faPlus
   };
 
+  public addedFoods: AddIngredientFormData[] = [];
+
   public searchControl = new FormControl();
 
   public searchResults$: Observable<Food[]>;
 
-  constructor(private foodService: FoodService) { }
+  constructor(private foodService: FoodService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.searchResults$ = this.searchControl.valueChanges
@@ -44,11 +51,14 @@ export class PrepPageComponent implements OnInit, OnDestroy {
     this.componentDestroyed$.complete();
   }
 
-}
+  onAddIngredientClick(): void {
+    const dialogRef = this.dialog.open(AddIngredientDialogComponent, {
+      width: '80%',
+      maxWidth: '800px',
+      panelClass: 'grey-container'
+    });
 
-@NgModule({
-  declarations: [ PrepPageComponent ],
-  imports: [ ReactiveFormsModule, CommonModule, FontAwesomeModule, ModalModule ],
-  exports: [ PrepPageComponent ]
-})
-export class PrepPageModule { }
+    dialogRef.componentInstance.submit.subscribe(addedFood => this.addedFoods.push(addedFood));
+  }
+
+}

@@ -1,29 +1,46 @@
 .prep-page {
-  .prep-row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .main-container {
+    flex: 9999 0 700px;
+
+    .ingredient-list, .portion-planner {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    .ingredient-list {
+      padding-top: 10px;
+      padding-bottom: 5px;
+    }
+
+    .portion-planner {
+      padding-top: 5px;
+      padding-bottom: 10px;
+    }
+  }
+
+  .summary-container {
     display: flex;
+    flex-direction: column;
+    flex: 1 0 300px;
+    padding: 10px;
 
-    .prep-col {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-
-      .ingredients-list {
-        flex: 1;
-        background-color: cadetblue;
-      }
-
-      .portions {
-        flex: 1;
-        background-color: azure;
-      }
+    mat-card {
+      height: 100%;
     }
+  }
 
-    .search-area {
-      flex: 0 0 400px;
-      background-color: antiquewhite;
-      max-height: 700px;
-      overflow-y: scroll;
-    }
+  .spacer {
+    flex: 1 1 auto;
+  }
 
+  mat-card-title {
+    display: flex;
+    align-items: center;
   }
 }

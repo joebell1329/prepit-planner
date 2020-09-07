@@ -1,7 +1,6 @@
 {
   "auth": {
     "client_id": "<oauth 2.0 client id>",
-    "domain": "<oauth 2.0 domain>",
-    "audience": "<oauth 2.0 audience>"
+    "domain": "<oauth 2.0 domain>"
   }
 }

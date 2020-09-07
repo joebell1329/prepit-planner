@@ -1,0 +1,25 @@
+<form [formGroup]="formGroup">
+
+  <!-- COOKED WEIGHT -->
+  <mat-form-field appearance="outline">
+    <mat-label>Cooked weight</mat-label>
+    <input matInput [formControlName]="FORM_KEYS.cookedWeight">
+    <span matSuffix>grams</span>
+  </mat-form-field>
+
+  <!-- TARGET AMOUNT -->
+  <mat-form-field appearance="outline">
+    <mat-label>Target</mat-label>
+    <input matInput [formControlName]="FORM_KEYS.targetAmount">
+  </mat-form-field>
+
+  <!-- TARGET TYPE -->
+  <mat-form-field appearance="outline">
+    <mat-label>Target units</mat-label>
+    <mat-select [formControlName]="FORM_KEYS.targetType">
+      <mat-option value="calories">calories</mat-option>
+      <mat-option value="servings">servings</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</form>

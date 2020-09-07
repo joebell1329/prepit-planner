@@ -13,6 +13,7 @@ import { AddIngredientDialogComponent } from '../add-ingredient-dialog/add-ingre
 import { AddIngredientFormData } from '../add-ingredient-form/add-ingredient-form.model';
 import { Food } from '../api/api.model';
 import { FoodService } from '../api/food/food.service';
+import { PortionsFormData } from '../portions-form/portions-form.model';
 
 @Component({
   selector: 'prepit-prep-page',
@@ -28,6 +29,12 @@ export class PrepPageComponent implements OnInit, OnDestroy {
   };
 
   public addedFoods: AddIngredientFormData[] = [];
+  public portionsData: PortionsFormData;
+  public totalCalories: number;
+  public caloriesPerPortion: number;
+  public caloriesPerHundredGrams: number;
+  public portionSize: number;
+  public portionCount: number;
 
   public searchControl = new FormControl();
 
@@ -59,6 +66,32 @@ export class PrepPageComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.componentInstance.submit.subscribe(addedFood => this.addedFoods.push(addedFood));
+  }
+
+  public onPortionsFormValueChanged(portionsData: PortionsFormData): void {
+    if (this.addedFoods?.length) {
+      this.portionsData = portionsData;
+      this.getSummary();
+    }
+  }
+
+  private getSummary(): void {
+    this.totalCalories = this.addedFoods
+      .map(ingredient => ingredient.calories)
+      .reduce((acc, value) => acc + value, 0);
+
+    switch (this.portionsData.targetType) {
+      case 'calories':
+        this.portionCount = Math.round(this.totalCalories / this.portionsData.targetAmount);
+        break;
+      case 'servings':
+        this.portionCount = Math.round(this.portionsData.targetAmount);
+        break;
+    }
+
+    this.portionSize = Math.round(this.portionsData.cookedWeight / this.portionCount);
+    this.caloriesPerPortion = Math.round((this.totalCalories / this.portionsData.cookedWeight) * this.portionSize );
+    this.caloriesPerHundredGrams = Math.round((this.totalCalories / this.portionsData.cookedWeight) * 100);
   }
 
 }

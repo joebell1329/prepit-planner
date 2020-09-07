@@ -4,4 +4,5 @@ export type AddIngredientFormData = {
   food: Food;
   amount: number;
   unit: Unit;
+  calories: number;
 };

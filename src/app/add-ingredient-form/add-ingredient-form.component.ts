@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { Observable, of, Subject } from 'rxjs';
-import { debounceTime, shareReplay, switchMap, take, takeUntil, tap } from 'rxjs/operators';
-import { Food, Unit } from '../api/api.model';
+import { combineLatest, Observable, of, Subject } from 'rxjs';
+import { debounceTime, filter, map, shareReplay, switchMap, takeUntil } from 'rxjs/operators';
+import { Food, Serving } from '../api/api.model';
 import { FoodService } from '../api/food/food.service';
+import { calculateCalories } from '../helpers/helpers';
 import { AddIngredientFormData } from './add-ingredient-form.model';
 
 @Component({
@@ -21,7 +22,8 @@ export class AddIngredientFormComponent implements OnInit, OnDestroy {
     searchQuery: 'searchQuery',
     ingredient: 'ingredient',
     amount: 'amount',
-    unit: 'unit'
+    unit: 'unit',
+    calories: 'calories'
   };
 
   public readonly ICONS = {
@@ -35,9 +37,6 @@ export class AddIngredientFormComponent implements OnInit, OnDestroy {
   private componentDestroyed$ = new Subject<void>();
 
   public searchResults$: Observable<Food[]>;
-  public allUnits$: Observable<Unit[]>;
-
-  public filteredUnits: Unit[] = [];
 
   public get searchQuery(): FormControl {
     return this.formGroup?.get(this.FORM_KEYS.searchQuery) as FormControl;
@@ -55,30 +54,26 @@ export class AddIngredientFormComponent implements OnInit, OnDestroy {
     return this.formGroup?.get(this.FORM_KEYS.unit) as FormControl;
   }
 
+  public get calories(): FormControl {
+    return this.formGroup?.get(this.FORM_KEYS.calories) as FormControl;
+  }
+
   constructor(private formBuilder: FormBuilder, public foodService: FoodService) {
   }
 
   ngOnInit(): void {
     this.buildForm();
     this.setupObservables();
-    this.ingredient.valueChanges.subscribe(selectedIngredient => {
-      this.allUnits$
-        .pipe(
-          take(1)
-        )
-        .subscribe(units => {
-          console.log(selectedIngredient);
-          console.log(units.filter(unit => selectedIngredient.units.some(sUnit => sUnit === unit.id)));
-          this.filteredUnits = units.filter(unit => selectedIngredient.units.some(sUnit => sUnit === unit.id));
-        });
-    });
 
     this.formGroup.statusChanges.subscribe(status => this.validityChange.emit(status === 'VALID'));
-    this.formGroup.valueChanges.subscribe(() => this.valueChange.emit({
-      food: this.ingredient.value,
-      amount: this.amount.value,
-      unit: this.unit.value
-    }));
+    this.formGroup.valueChanges
+      .pipe(filter(() => this.formGroup.valid))
+      .subscribe(() => this.valueChange.emit({
+        food: this.ingredient.value,
+        amount: this.amount.value,
+        unit: this.unit.value,
+        calories: this.calories.value
+      }));
   }
 
   ngOnDestroy(): void {
@@ -87,8 +82,11 @@ export class AddIngredientFormComponent implements OnInit, OnDestroy {
   }
 
   onFoodSelected(food: Food): void {
-    this.ingredient.setValue(food);
-    this.foodListVisible = false;
+    this.foodService.getFood(food.foodId)
+      .subscribe(fullFood => {
+        this.ingredient.setValue(fullFood);
+        this.foodListVisible = false;
+      });
   }
 
   private buildForm(): void {
@@ -96,7 +94,8 @@ export class AddIngredientFormComponent implements OnInit, OnDestroy {
       [this.FORM_KEYS.searchQuery]: [ '' ],
       [this.FORM_KEYS.ingredient]: [ null, Validators.required ],
       [this.FORM_KEYS.amount]: [ null, Validators.required ],
-      [this.FORM_KEYS.unit]: [ null, Validators.required ]
+      [this.FORM_KEYS.unit]: [ null, Validators.required ],
+      [this.FORM_KEYS.calories]: [ null ]
     });
   }
 
@@ -109,11 +108,22 @@ export class AddIngredientFormComponent implements OnInit, OnDestroy {
         shareReplay(1)
       );
 
-    this.allUnits$ = this.foodService.getUnits()
+    combineLatest([ this.amount.valueChanges, this.unit.valueChanges ])
       .pipe(
-        tap(console.log),
-        shareReplay(1)
-      );
-  }
+        takeUntil(this.componentDestroyed$),
+        map(() => {
+          if (this.amount.value > 0 && this.unit.value) {
+            const servingConfig: Serving = this.ingredient.value.servings
+              .find((serving: Serving) => serving.unitId === this.unit.value.id);
 
+            const defaultCalories: number = this.ingredient.value.calories;
+
+            return calculateCalories(defaultCalories, servingConfig, this.amount.value);
+          } else {
+            return 0;
+          }
+        })
+      )
+      .subscribe(calories => this.calories.setValue(calories));
+  }
 }

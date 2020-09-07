@@ -27,10 +27,13 @@
 
       <!-- UNITS -->
       <mat-form-field appearance="outline">
+        <mat-label>Units</mat-label>
         <mat-select [formControlName]="FORM_KEYS.unit">
-          <mat-option *ngFor="let unit of filteredUnits" [value]="unit">{{ unit.plural || unit.name }}</mat-option>
+          <mat-option *ngFor="let serving of ingredient?.value?.servings" [value]="serving.unit">{{ serving.unit.plural || serving.unit.name }}</mat-option>
         </mat-select>
       </mat-form-field>
+
+      <span>&nbsp;{{ calories.value }} kcal</span>
 
     </mat-card-content>
   </mat-card>

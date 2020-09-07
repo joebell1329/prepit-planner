@@ -14,7 +14,7 @@ export class AddIngredientDialogComponent {
   public formIsValid = false;
   public formData: AddIngredientFormData;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<AddIngredientDialogComponent>) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<AddIngredientDialogComponent>) { }
 
   onFormValidityChange(formIsValid: boolean): void {
     this.formIsValid = formIsValid;
@@ -22,7 +22,6 @@ export class AddIngredientDialogComponent {
 
   onFormValueChange(formData: AddIngredientFormData): void {
     this.formData = formData;
-    console.log(formData);
   }
 
 }

@@ -1,5 +1,7 @@
 <div class="prep-page">
   <div class="main-container">
+
+    <!-- INGREDIENTS -->
     <div class="ingredient-list">
       <mat-card>
         <mat-card-title>
@@ -8,25 +10,49 @@
           <button mat-mini-fab (click)="onAddIngredientClick()"><fa-icon [icon]="ICONS.faPlus"></fa-icon></button>
         </mat-card-title>
         <mat-card-content>
-          <div *ngFor="let food of addedFoods">
-            {{ food.food.brand || 'Generic' }} - {{ food.food.name }}: {{ food.amount }}{{ food.amount > 1 ? food.unit.name : food.unit.plural }}
-          </div>
+          <mat-list role="list" *ngIf="addedFoods">
+            <mat-list-item role="listitem" *ngFor="let ingredient of addedFoods">
+              {{ ingredient.food.brand || 'Generic' }}
+              &nbsp;-&nbsp;
+              {{ ingredient.food.name }}
+              &nbsp;-&nbsp;
+              {{ ingredient.amount }}
+              {{ ingredient.amount > 1 ? ingredient.unit.plural : ingredient.unit.name }}
+              &nbsp;-&nbsp;
+              {{ ingredient.calories }} kcal
+            </mat-list-item>
+          </mat-list>
         </mat-card-content>
       </mat-card>
     </div>
+
+    <!-- PORTIONS -->
     <div class="portion-planner">
       <mat-card>
         <mat-card-title>
           <span>Portions</span>
         </mat-card-title>
-        <mat-card-content>Portions planner</mat-card-content>
+        <mat-card-content>
+          <prepit-portions-form (valueChange)="onPortionsFormValueChanged($event)"></prepit-portions-form>
+        </mat-card-content>
       </mat-card>
     </div>
   </div>
+
+  <!-- SUMMARY -->
   <div class="summary-container">
     <mat-card>
-      <mat-card-title>Calories</mat-card-title>
-      <mat-card-content>Calorie summary</mat-card-content>
+      <mat-card-title>Summary</mat-card-title>
+      <mat-card-content>
+        <mat-list *ngIf="portionsData">
+          <mat-list-item>Total calories - {{ totalCalories }}</mat-list-item>
+          <mat-list-item>Calories per 100 grams - {{ caloriesPerHundredGrams }}</mat-list-item>
+          <mat-list-item>Calories per portion - {{ caloriesPerPortion }}</mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>Portion size - {{ portionSize }} grams</mat-list-item>
+          <mat-list-item>Number of portions - {{ portionCount }}</mat-list-item>
+        </mat-list>
+      </mat-card-content>
     </mat-card>
   </div>
 </div>

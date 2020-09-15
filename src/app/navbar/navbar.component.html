@@ -1,5 +1,9 @@
 <mat-toolbar color="primary">
-  <span>Prepit!</span>
+  <span>
+    <a mat-button routerLink="/">
+      <h1>Prepit!</h1>
+    </a>
+  </span>
   <a mat-button routerLink="/prep" *ngIf="auth.loggedIn$ | async">Meals</a>
   <span class="spacer"></span>
   <button mat-raised-button *ngIf="!(auth.loggedIn$ | async)" (click)="auth.login()">Login</button>

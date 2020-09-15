@@ -24,6 +24,7 @@ import { PrepPageComponent } from './prep-page/prep-page.component';
 import { AddIngredientFormComponent } from './add-ingredient-form/add-ingredient-form.component';
 import { FoodListComponent } from './food-list/food-list.component';
 import { PortionsFormComponent } from './portions-form/portions-form.component';
+import { HomePageComponent } from './home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { PortionsFormComponent } from './portions-form/portions-form.component';
     NavbarComponent,
     AddIngredientFormComponent,
     FoodListComponent,
-    PortionsFormComponent
+    PortionsFormComponent,
+    HomePageComponent
   ],
   imports: [
     AppRoutingModule,

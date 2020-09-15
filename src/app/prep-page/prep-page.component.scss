@@ -6,41 +6,29 @@
   margin: 0 auto;
 
   .main-container {
-    flex: 9999 0 700px;
-
-    .ingredient-list, .portion-planner {
-      padding-left: 10px;
-      padding-right: 10px;
-    }
-
-    .ingredient-list {
-      padding-top: 10px;
-      padding-bottom: 5px;
-    }
-
-    .portion-planner {
-      padding-top: 5px;
-      padding-bottom: 10px;
-    }
+    flex: 9999 0 300px;
   }
 
   .summary-container {
     display: flex;
     flex-direction: column;
     flex: 1 0 300px;
-    padding: 10px;
-
-    mat-card {
-      height: 100%;
-    }
   }
 
   .spacer {
     flex: 1 1 auto;
   }
 
-  mat-card-title {
+  mat-card {
+    mat-card-title {
+      display: flex;
+      align-items: center;
+    }
+    margin: 10px;
+  }
+
+  .save-actions {
     display: flex;
-    align-items: center;
+    justify-content: flex-end;
   }
 }

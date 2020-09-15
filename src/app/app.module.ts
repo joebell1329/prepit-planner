@@ -25,6 +25,7 @@ import { AddIngredientFormComponent } from './add-ingredient-form/add-ingredient
 import { FoodListComponent } from './food-list/food-list.component';
 import { PortionsFormComponent } from './portions-form/portions-form.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import { SaveFoodFormComponent } from './save-food-form/save-food-form.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,9 @@ import { HomePageComponent } from './home-page/home-page.component';
     AddIngredientFormComponent,
     FoodListComponent,
     PortionsFormComponent,
-    HomePageComponent
+    HomePageComponent,
+    SaveFoodFormComponent,
+    SaveFoodFormComponent
   ],
   imports: [
     AppRoutingModule,

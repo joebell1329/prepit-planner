@@ -25,3 +25,23 @@ export type Unit = {
   name: string;
   plural: string;
 };
+
+export type CreateFoodPayload = {
+  name: string;
+  brand: string;
+  defaultFoodMeasurementUnitId: number;
+  defaultServingSize: number;
+  calories: number;
+};
+
+export type SearchFoodsResponse = {
+  foods: Food[];
+};
+
+export type GetFoodResponse = {
+  food: Food;
+};
+
+export type CreateFoodResponse = {
+  food: Food;
+};

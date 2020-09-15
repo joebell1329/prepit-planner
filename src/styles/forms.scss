@@ -1,0 +1,11 @@
+.prepit-form {
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+
+    mat-form-field {
+      flex: 1;
+      margin: 5px;
+    }
+  }
+}

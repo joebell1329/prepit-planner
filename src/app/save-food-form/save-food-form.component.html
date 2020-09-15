@@ -1,0 +1,17 @@
+<form [formGroup]="formGroup" class="prepit-form">
+
+  <div class="form-row">
+    <!-- NAME -->
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput [formControlName]="FORM_KEYS.name">
+    </mat-form-field>
+
+    <!-- BRAND -->
+    <mat-form-field appearance="outline">
+      <mat-label>Brand</mat-label>
+      <input matInput [formControlName]="FORM_KEYS.brand">
+    </mat-form-field>
+  </div>
+
+</form>

@@ -1,6 +1,18 @@
 <div class="prep-page">
   <div class="main-container">
 
+    <!-- CUSTOM MEAL DETAILS -->
+    <div class="custom-meal-form">
+      <mat-card>
+        <mat-card-title>
+          <span>Meal details</span>
+        </mat-card-title>
+        <mat-card-content>
+          <prepit-save-food-form (valueChange)="onSaveFoodFormValueChanged($event)"></prepit-save-food-form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
     <!-- INGREDIENTS -->
     <div class="ingredient-list">
       <mat-card>
@@ -10,8 +22,8 @@
           <button mat-mini-fab (click)="onAddIngredientClick()"><fa-icon [icon]="ICONS.faPlus"></fa-icon></button>
         </mat-card-title>
         <mat-card-content>
-          <mat-list role="list" *ngIf="addedFoods">
-            <mat-list-item role="listitem" *ngFor="let ingredient of addedFoods">
+          <mat-list role="list" *ngIf="ingredients.value">
+            <mat-list-item role="listitem" *ngFor="let ingredient of ingredients.value">
               {{ ingredient.food.brand || 'Generic' }}
               &nbsp;-&nbsp;
               {{ ingredient.food.name }}
@@ -37,6 +49,7 @@
         </mat-card-content>
       </mat-card>
     </div>
+
   </div>
 
   <!-- SUMMARY -->
@@ -44,14 +57,20 @@
     <mat-card>
       <mat-card-title>Summary</mat-card-title>
       <mat-card-content>
-        <mat-list *ngIf="portionsData">
-          <mat-list-item>Total calories - {{ totalCalories }}</mat-list-item>
-          <mat-list-item>Calories per 100 grams - {{ caloriesPerHundredGrams }}</mat-list-item>
-          <mat-list-item>Calories per portion - {{ caloriesPerPortion }}</mat-list-item>
+        <mat-list>
+          <mat-list-item>Total calories - {{ totalCalories$ | async }}</mat-list-item>
+          <mat-list-item>Calories per 100 grams - {{ caloriesPerHundredGrams$ | async }}</mat-list-item>
+          <mat-list-item>Calories per portion - {{ caloriesPerPortion$ | async }}</mat-list-item>
           <mat-divider></mat-divider>
-          <mat-list-item>Portion size - {{ portionSize }} grams</mat-list-item>
-          <mat-list-item>Number of portions - {{ portionCount }}</mat-list-item>
+          <mat-list-item>Portion size - {{ portionSize$ | async }} grams</mat-list-item>
+          <mat-list-item>Number of portions - {{ portionCount$ | async }}</mat-list-item>
         </mat-list>
+
+        <div class="save-actions">
+          <form [formGroup]="formGroup" (ngSubmit)="onSubmitMeal()">
+            <button mat-raised-button color="accent" [disabled]="!formGroup.valid" type="submit">Save custom food</button>
+          </form>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>

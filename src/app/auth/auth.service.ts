@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import createAuth0Client, { Auth0Client, RedirectLoginResult } from '@auth0/auth0-spa-js';
 import { BehaviorSubject, combineLatest, from, Observable, of, throwError } from 'rxjs';
-import { catchError, concatMap, shareReplay, switchMap, take, tap } from 'rxjs/operators';
+import { catchError, concatMap, map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { ConfigService } from '../config/config.service';
 
 @Injectable({
@@ -16,6 +16,10 @@ export class AuthService {
 
   private userProfileSubject$ = new BehaviorSubject<any>(null);
   public userProfile$ = this.userProfileSubject$.asObservable();
+  public fitbitUserId$ = this.userProfile$
+    .pipe(
+      map(profile => profile.sub.slice(profile.sub.indexOf('|') + 1))
+    );
 
   private loggedInSubject$ = new BehaviorSubject<boolean>(false);
   public loggedIn$ = this.loggedInSubject$.asObservable();

@@ -1,14 +1,21 @@
 <form [formGroup]="formGroup">
+  <mat-tab-group mat-align-tabs="start">
+    <mat-tab label="Search">
+      <!-- SEARCH -->
+      <mat-form-field class="search-field" appearance="outline">
+        <mat-label>Search</mat-label>
+        <input (focus)="foodListVisible = true" matInput [formControlName]="FORM_KEYS.searchQuery" autocomplete="off">
+        <fa-icon matSuffix [icon]="ICONS.faSearch"></fa-icon>
+      </mat-form-field>
 
-  <!-- SEARCH -->
-  <mat-form-field class="search-field" appearance="outline">
-    <mat-label>Search</mat-label>
-    <input (focus)="foodListVisible = true" matInput [formControlName]="FORM_KEYS.searchQuery" autocomplete="off">
-    <fa-icon matSuffix [icon]="ICONS.faSearch"></fa-icon>
-  </mat-form-field>
-
-  <!-- SEARCH RESULTS -->
-  <prepit-food-list *ngIf="foodListVisible" [foods]="searchResults$ | async" (foodSelect)="onFoodSelected($event)"></prepit-food-list>
+      <!-- SEARCH RESULTS -->
+      <prepit-food-list *ngIf="foodListVisible" [foods]="searchResults$ | async" (foodSelect)="onFoodSelected($event)"></prepit-food-list>
+    </mat-tab>
+    <mat-tab label="My Foods">
+      <!-- USER FOODS -->
+      <prepit-food-list *ngIf="(userFoods$ | async)?.length; else noCustomFoods" [foods]="userFoods$ | async" (foodSelect)="onFoodSelected($event)"></prepit-food-list>
+    </mat-tab>
+  </mat-tab-group>
 
   <mat-card *ngIf="ingredient.value">
 
@@ -38,3 +45,7 @@
     </mat-card-content>
   </mat-card>
 </form>
+
+<ng-template #noCustomFoods>
+  There are no custom foods to display.
+</ng-template>

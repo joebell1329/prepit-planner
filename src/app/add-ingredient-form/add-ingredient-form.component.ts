@@ -37,6 +37,7 @@ export class AddIngredientFormComponent implements OnInit, OnDestroy {
   private componentDestroyed$ = new Subject<void>();
 
   public searchResults$: Observable<Food[]>;
+  public userFoods$: Observable<Food[]>;
 
   public get searchQuery(): FormControl {
     return this.formGroup?.get(this.FORM_KEYS.searchQuery) as FormControl;
@@ -105,6 +106,12 @@ export class AddIngredientFormComponent implements OnInit, OnDestroy {
         takeUntil(this.componentDestroyed$),
         debounceTime(500),
         switchMap(query => query.length ? this.foodService.searchFoods(query) : of(null)),
+        shareReplay(1)
+      );
+
+    this.userFoods$ = this.foodService.getUserFoods()
+      .pipe(
+        takeUntil(this.componentDestroyed$),
         shareReplay(1)
       );
 

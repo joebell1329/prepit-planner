@@ -13,6 +13,15 @@ export type Food = {
   units: number[];
 };
 
+export enum MealType {
+  BREAKFAST = 1,
+  MORNING_SNACK,
+  LUNCH,
+  AFTERNOON_SNACK,
+  DINNER,
+  ANY_TIME
+}
+
 export type Serving = {
   multiplier: number;
   servingSize: number;
@@ -26,12 +35,37 @@ export type Unit = {
   plural: string;
 };
 
+export type FoodLog = {
+  isFavorite: boolean;
+  logDate: string;
+  logId: string;
+  loggedFood: Food;
+  nutritionalValues: NutritionalValues;
+};
+
+export type NutritionalValues = {
+  calories: number;
+  carbs: number;
+  fat: number;
+  fiber: number;
+  protien: number;
+  sodium: number;
+};
+
 export type CreateFoodPayload = {
   name: string;
   brand: string;
   defaultFoodMeasurementUnitId: number;
   defaultServingSize: number;
   calories: number;
+};
+
+export type LogFoodPayload = {
+  foodId: number;
+  mealTypeId: MealType;
+  unitId: number;
+  amount: number;
+  date: Date;
 };
 
 export type SearchFoodsResponse = {
@@ -42,6 +76,14 @@ export type GetFoodResponse = {
   food: Food;
 };
 
+export type GetUserFoodsResponse = {
+  foods: Food[];
+};
+
 export type CreateFoodResponse = {
   food: Food;
+};
+
+export type LogFoodResponse = {
+  foodLog: FoodLog;
 };

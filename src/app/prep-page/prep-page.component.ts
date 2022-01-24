@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { combineLatest, Observable, Subject } from 'rxjs';
-import { debounceTime, filter, map, shareReplay, switchMap, take, takeUntil } from 'rxjs/operators';
+import { map, shareReplay, switchMap, take, takeUntil } from 'rxjs/operators';
 import { AddIngredientDialogComponent } from '../add-ingredient-dialog/add-ingredient-dialog.component';
 import { AddIngredientFormData } from '../add-ingredient-form/add-ingredient-form.model';
 import { Food } from '../api/api.model';
@@ -19,7 +19,8 @@ import { SaveFoodFormData } from '../save-food-form/save-food-form.model';
 export class PrepPageComponent implements OnInit, OnDestroy {
 
   public readonly ICONS = {
-    faPlus
+    faPlus,
+    faMinus,
   };
 
   public readonly FORM_KEYS = {
@@ -64,6 +65,20 @@ export class PrepPageComponent implements OnInit, OnDestroy {
       const ingredients = this.ingredients.value ?? [];
       this.ingredients.setValue([ ...ingredients, addedFood ]);
     });
+  }
+
+  public onRemoveIngredientClick(ingredient: Food): void {
+    console.log(this.ingredients.value, ingredient);
+    let ingredients: Food[] = this.ingredients.value;
+
+    ingredients = ingredients.reduce((acc, value) => {
+      if (JSON.stringify(value) !== JSON.stringify(ingredient)) {
+        acc.push(value);
+      }
+      return acc;
+    }, []);
+
+    this.ingredients.setValue(ingredients);
   }
 
   public onPortionsFormValueChanged(portionsData: PortionsFormData): void {

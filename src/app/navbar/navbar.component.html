@@ -1,9 +1,7 @@
 <mat-toolbar color="primary">
-  <span>
     <a mat-button routerLink="/">
-      <img src="/assets/prepit-logo.png" alt="Prepit!">
+      <h1>Prepit!</h1>
     </a>
-  </span>
   <a mat-button routerLink="/prep" *ngIf="auth.loggedIn$ | async">Meals</a>
   <span class="spacer"></span>
   <button mat-raised-button *ngIf="!(auth.loggedIn$ | async)" (click)="auth.login()">Login</button>

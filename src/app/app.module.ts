@@ -27,6 +27,7 @@ import { FoodListComponent } from './food-list/food-list.component';
 import { PortionsFormComponent } from './portions-form/portions-form.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { SaveFoodFormComponent } from './save-food-form/save-food-form.component';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { SaveFoodFormComponent } from './save-food-form/save-food-form.component
     MatInputModule,
     MatListModule,
     MatSelectModule,
-    MatTabsModule
+    MatTabsModule,
+    MatBadgeModule
   ],
   providers: [
     {

@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "postbuild":  "node build-scripts/generate-config.js",
+    "postbuild": "node build-scripts/generate-config.js",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
